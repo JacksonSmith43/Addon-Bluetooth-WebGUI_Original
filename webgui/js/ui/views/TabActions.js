@@ -131,9 +131,8 @@ class TabActions extends Component {
                     ${slots.map(slot => html`<span class="${mobileView ? 'col-12' : 'col'} ${this.getSlotStyle(slot)}">Slot "${slot}"</span>`)}
                 </li>
                
-
-                    ${C.DEVICE_IS_FABI && !(ATDevice.isMajorVersion(3)) ? html`
-                    ${btnModesV2.map((btnModeV2, index) => html`
+                    ${C.DEVICE_IS_FABI && !(ATDevice.isMajorVersion(3)) ? html`  <!-- This is a glorified if. -->
+                    ${btnModesV2.map((btnModeV2, index) => html` 
                         <li class="row ${mobileView ? 'py-3' : 'py-0'}" style="${index % 2 === 0 ? 'background-color: rgb(224 224 224)' : ''}">
                             <strong class="${mobileView ? 'col-12' : 'col'}">${L.translate(btnModeV2.label)}</strong>
                             ${slots.map(slot => html`

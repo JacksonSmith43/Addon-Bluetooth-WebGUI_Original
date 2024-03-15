@@ -1,7 +1,7 @@
 import { h, Component, render } from '../../../lib/preact.min.js';
 import htm from '../../../lib/htm.min.js';
-import {ATDevice} from "../../communication/ATDevice.js";
-import {ActionButton} from "../components/ActionButton.js";
+import { ATDevice } from "../../communication/ATDevice.js";
+import { ActionButton } from "../components/ActionButton.js";
 
 const html = htm.bind(h);
 class TabSipPuff extends Component {
@@ -88,7 +88,7 @@ class TabSipPuff extends Component {
             this.setState({});
         }
     }
-    
+
     render() {
         let state = this.state;
 
@@ -96,6 +96,7 @@ class TabSipPuff extends Component {
             <h2>${L.translate('Sip/Puff configuration (slot "{?}") // Saug- / Pustesteuerung (Slot "{?}")', ATDevice.getCurrentSlot())}</h2>
             <span id="pressureLiveA11yLabel" class="sr-only">${L.translate('Current pressure value // Aktueller Wert Druck')}</span>
             <span id="pressureLiveA11y" aria-describedby="pressureLiveA11yLabel" class="onlyscreenreader" role="status" aria-live="off" accesskey="w" tabindex="-1">${state.valueA11y}</span>
+            
             <div id="tab-puff-container" class="relative container-fluid">
                 <div class="row back-layer full-height full-width">
                     <div aria-hidden="true" class="two columns"><span style="font-size: 1px; color: transparent">_</span></div>
@@ -131,6 +132,7 @@ class TabSipPuff extends Component {
                         <span>max:</span><span id="maxValue">${state.maxValue}</span>,
                         <span>min:</span><span id="minValue">${state.minValue}</span>
                     </div>
+
                     <div class="ten columns"
                          style="position:relative; height: 2em; border-style: solid; border-width: thin; background-color: transparent">
                         <div id="sippuff-value-bar" class="value-bar" style="width: ${state.percent}%;"></div>
@@ -147,7 +149,7 @@ class TabSipPuff extends Component {
                 </div>
                 <div class="${C.DEVICE_IS_FABI ? 'd-none' : ''}">
                     <label for="PUFF_STRONG_THRESHOLD">${L.translate('Strong Puff Threshold: // Schwellenwert Pusten stark:')}</label>
-                    <div id="PUFF_STRONG_THRESHOLD_WRAPPER" class="row ${state.value > state.PUFF_STRONG_THRESHOLD  ? 'colored-thumb' : ''}">
+                    <div id="PUFF_STRONG_THRESHOLD_WRAPPER" class="row ${state.value > state.PUFF_STRONG_THRESHOLD ? 'colored-thumb' : ''}">
                         <span aria-hidden="true" id="PUFF_STRONG_THRESHOLD_VAL" class="text-center two columns">${state.PUFF_STRONG_THRESHOLD}</span>
                         <input type="range" value="${state.PUFF_STRONG_THRESHOLD}" oninput="${(event) => this.sliderChanged(event, C.AT_CMD_PUFF_STRONG_THRESHOLD)}"
                                id="PUFF_STRONG_THRESHOLD" min="${state.minRange}" max="${state.maxRange}" class="ten columns" accesskey="v"/>
@@ -157,13 +159,87 @@ class TabSipPuff extends Component {
             <div style="margin-top: 4em">
                 ${html`<${ActionButton} onclick="${() => ATDevice.copyConfigToAllSlots([C.AT_CMD_SIP_THRESHOLD, C.AT_CMD_SIP_STRONG_THRESHOLD, C.AT_CMD_PUFF_THRESHOLD, C.AT_CMD_PUFF_STRONG_THRESHOLD])}"
                                         label="Copy config to all slots // Konfiguration auf alle Slots anwenden"
-                                        progressLabel="Applying to all slots... // Anwenden auf alle Slots..." faIcon="far clone"/>`}
+                                        progressLabel="Applying to all slots... // Anwenden auf alle Slots..." faIcon="far clone"/>
+                `}
+            
+            
+    
+        <!-- TODO: Change the simple Sip/Puff to strong Sip/Puff. -->
+            <h2>${L.translate('Strong Sip/Puff configuration (slot "{?}") // Starkes Saug- / Pustesteuerung (Slot "{?}")', ATDevice.getCurrentSlot())}</h2>
+            <span id="pressureLiveA11yLabel" class="sr-only">${L.translate('Current pressure value // Aktueller Wert Druck')}</span>
+            <span id="pressureLiveA11y" aria-describedby="pressureLiveA11yLabel" class="onlyscreenreader" role="status" aria-live="off" accesskey="w" tabindex="-1">${state.valueA11y}</span>
+            
+                <div id="tab-puff-container" class="relative container-fluid">
+                    <div class="row back-layer full-height full-width">
+                        <div aria-hidden="true" class="two columns"><span style="font-size: 1px; color: transparent">_</span></div>
+                        <div class="ten columns full-height relative">
+                            <div id="guide-current" class="back-layer full-height border-right-gray"
+                                style="width: ${state.percent}%;"></div>
+                            <div id="guide-max" class="back-layer full-height border-right-red" style="width: ${state.percentMax}%;"></div>
+                            <div id="guide-min" class="back-layer full-height border-right-blue" style="width: ${state.percentMin}%;"></div>
+                        </div>
+                    </div>
+
+                    <br/>
+                    <label for="SIP_THRESHOLD">${L.translate('Sip Threshold: // Schwellenwert Saugen:')}</label>
+                    <div id="SIP_THRESHOLD_WRAPPER" class="row ${state.value < state.SIP_THRESHOLD ? 'colored-thumb' : ''}">
+                        <span aria-hidden="true" id="SIP_THRESHOLD_VAL" class="text-center two columns">${state.SIP_THRESHOLD}</span>
+                        <input type="range" value="${state.SIP_THRESHOLD}" oninput="${(event) => this.sliderChanged(event, C.AT_CMD_SIP_THRESHOLD)}"
+                            id="SIP_THRESHOLD" min="${state.minRange}" max="${state.maxRange}" class="ten columns" accesskey="y"/>
+                    </div>
+
+                    <div class="${C.DEVICE_IS_FABI ? 'd-none' : ''}">
+                        <label for="SIP_STRONG_THRESHOLD">${L.translate('Strong Sip Threshold: // Schwellenwert Saugen stark:')}</label>
+                        <div id="SIP_STRONG_THRESHOLD_WRAPPER" class="row ${state.value < state.SIP_STRONG_THRESHOLD ? 'colored-thumb' : ''}">
+                            <span aria-hidden="true" id="SIP_STRONG_THRESHOLD_VAL" class="text-center two columns">${state.SIP_STRONG_THRESHOLD}</span>
+                            <input type="range" value="${state.SIP_STRONG_THRESHOLD}" oninput="${(event) => this.sliderChanged(event, C.AT_CMD_SIP_STRONG_THRESHOLD)}"
+                                id="SIP_STRONG_THRESHOLD" min="${state.minRange}" max="${state.maxRange}" class="ten columns" accesskey="x"/>
+                        </div>
+                    </div>
+
+                    <br/>
+                    <label aria-hidden="true">${L.translate('Live values: // Aktuelle Werte:')}</label>
+                    <div class="row" aria-hidden="true">
+                        <div id="value-bar-wrapper" class="text-center two columns">
+                            <span>${L.translate('current: // aktuell:')}</span><span id="currentValue">${state.value}</span>,
+                            <span>max:</span><span id="maxValue">${state.maxValue}</span>,
+                            <span>min:</span><span id="minValue">${state.minValue}</span>
+                        </div>
+
+                        <div class="ten columns"
+                            style="position:relative; height: 2em; border-style: solid; border-width: thin; background-color: transparent">
+                            <div id="sippuff-value-bar" class="value-bar" style="width: ${state.percent}%;"></div>
+                        </div>
+                    </div>
+
+                    <br/>
+                    <br/>
+                    <label for="PUFF_THRESHOLD">${L.translate('Puff Threshold: // Schwellenwert Pusten:')}</label>
+                    <div id="PUFF_THRESHOLD_WRAPPER" class="row ${state.value > state.PUFF_THRESHOLD ? 'colored-thumb' : ''}">
+                        <span aria-hidden="true" id="PUFF_THRESHOLD_VAL" class="text-center two columns">${state.PUFF_THRESHOLD}</span>
+                        <input type="range" value="${state.PUFF_THRESHOLD}" oninput="${(event) => this.sliderChanged(event, C.AT_CMD_PUFF_THRESHOLD)}"
+                            id="PUFF_THRESHOLD" min="${state.minRange}" max="${state.maxRange}" class="ten columns" accesskey="c"/>
+                    </div>
+
+                    <div class="${C.DEVICE_IS_FABI ? 'd-none' : ''}">
+                        <label for="PUFF_STRONG_THRESHOLD">${L.translate('Strong Puff Threshold: // Schwellenwert Pusten stark:')}</label>
+                        <div id="PUFF_STRONG_THRESHOLD_WRAPPER" class="row ${state.value > state.PUFF_STRONG_THRESHOLD ? 'colored-thumb' : ''}">
+                            <span aria-hidden="true" id="PUFF_STRONG_THRESHOLD_VAL" class="text-center two columns">${state.PUFF_STRONG_THRESHOLD}</span>
+                            <input type="range" value="${state.PUFF_STRONG_THRESHOLD}" oninput="${(event) => this.sliderChanged(event, C.AT_CMD_PUFF_STRONG_THRESHOLD)}"
+                                id="PUFF_STRONG_THRESHOLD" min="${state.minRange}" max="${state.maxRange}" class="ten columns" accesskey="v"/>
+                        </div>
+                    </div>
+                </div>
+
+            
+            
             </div>`;
+
     }
 }
 
 TabSipPuff.valueHandler = function (data) {
-   TabSipPuff.instance.updateData(data);
+    TabSipPuff.instance.updateData(data);
 };
 
-export {TabSipPuff};
+export { TabSipPuff };

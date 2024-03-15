@@ -34,8 +34,8 @@
         }
 
         import('./js/constantsGeneric.js').then(() => {
-            return Promise.resolve();
-        }).then(() => {
+            return Promise.resolve(); // The Promise is returned once the module has been loaded. 
+        }).then(() => { // then acts like if, except that all get execeuted, as long as the promise is valid. Otherwise it would go in the catch block.
            return import(constantsPath);
         }).then(() => {
             return import('./js/ui/views/InitDeviceView.js');
