@@ -34,7 +34,7 @@ class TabTimings extends Component {
         this.setState(state);
     }
 
-    resetSlider() {
+    resetSliderTiming() {
         const newValue = 0;
         const constants = [C.AT_CMD_THRESHOLD_LONGPRESS];
         this.valueChanged(newValue, constants);
@@ -118,7 +118,7 @@ class TabTimings extends Component {
         
             <div class="row" style="margin-top: 1em">
                 <div class="col col-lg-6">
-                    <${ActionButton}  resetSlider="${() => this.resetSlider()}" 
+                    <${ActionButton}  resetSliderTiming="${() => this.resetSliderTiming()}" 
                     label="Reset Threshold for long press // Schwellenwert für langes Drücken zurücksetzen" faIcon="fas undo" progressLabel="Resetting Threshold... // Schwellenwert wird zurückgesetzt..." /> <!-- fas undo is for the icon. -->
                 </div>
             </div>

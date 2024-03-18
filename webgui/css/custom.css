@@ -163,7 +163,7 @@ br {
     border-right: medium dotted darkgray;
 }
 
-#tab-puff-container span, #tab-puff-container label {
+#tab-puff-container span, #tab-puff-container label{
     background-color: white;
     white-space: normal;
 }

@@ -15,13 +15,16 @@ class ActionButton extends Component { // ActionButton is a react component whic
 
     doAction() {
         this.props.onclick = this.props.onclick || (() => { });
-        this.props.resetSlider = this.props.resetSlider || (() => { }); // props stands for properties and is possibly used for passing data and functions from a parent component to a child component in React.js.
+        this.props.resetSliderTiming = this.props.resetSliderTiming || (() => { }); // props stands for properties and is possibly used for passing data and functions from a parent component to a child component in React.js.
+        this.props.resetSlidersPuffSip = this.props.resetSlidersPuffSip || (() => { }); 
 
         this.setState({
             actionPerforming: true
         });
         Promise.resolve(this.props.onclick()).then(() => {
-            this.props.resetSlider();
+            this.props.resetSliderTiming();
+            this.props.resetSlidersPuffSip();
+            
             this.setState({
                 actionPerforming: false
             });
