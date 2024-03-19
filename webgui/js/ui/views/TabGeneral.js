@@ -173,7 +173,7 @@ class TabGeneral extends Component {
             ${html`<${FirmwareUpdateModal} close="${() => this.setState({ showFirmwareModal: false })}" fwInfo="${state.mainVersionFWInfo}" currentFwVersion="${this.state.mainVersion}"/>`}
         </div> 
         
-    ${C.DEVICE_IS_FABI && !(ATDevice.isMajorVersion(3)) ? html`
+    ${C.DEVICE_IS_FABI && !(ATDevice.isMajorVersion(3)) ? html` <!-- This is a glorified if. -->
 
         <h3 class="mt-5 ${C.DEVICE_IS_FM && ATDevice.isMajorVersion(3) ? 'd-none' : ''}">Firmware Bluetooth-Addon</h3> <!-- ASK: Is this relevant for the FM. -->
         <div class="container-fluid p-0 ${C.DEVICE_IS_FM && ATDevice.isMajorVersion(3) ? 'd-none' : ''}">
@@ -198,7 +198,8 @@ class TabGeneral extends Component {
                 </div>
             </div>
         </div> 
-    ` : ''}
+    ` : ''} <!-- '' incase it is false. -->
+
 
         <h2 class="mt-5">${L.translate('Reset to default configuration // Rücksetzen auf Defaulteinstellungen')}</h2>
         <div class="row mt-2">

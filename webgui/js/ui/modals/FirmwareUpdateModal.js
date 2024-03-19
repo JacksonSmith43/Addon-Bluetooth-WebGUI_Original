@@ -1,7 +1,7 @@
 import { h, Component } from '../../../lib/preact.min.js';
 import htm from '../../../lib/htm.min.js';
-import {FaIcon} from "../components/FaIcon.js";
-import {ATDevice} from "../../communication/ATDevice.js";
+import { FaIcon } from "../components/FaIcon.js";
+import { ATDevice } from "../../communication/ATDevice.js";
 
 const html = htm.bind(h);
 class FirmwareUpdateModal extends Component {
@@ -29,7 +29,7 @@ class FirmwareUpdateModal extends Component {
         }
         this.props.close();
     }
-    
+
     render(props) {
         if (!props || !props.fwInfo) {
             return;
@@ -65,7 +65,7 @@ class FirmwareUpdateModal extends Component {
                                 <li>${L.translate('Put the device into download mode. Afterwards it will connect to the computer like an USB storage device. // Versetzen Sie das Gerät in den Download-Modus. Dadurch meldet es sich am PC als USB-Speicher an.')}
                                     <div class="d-flex mt-2">
                                         <div>
-                                            <button onclick="${() => {this.enterDownloadMode()}}">${L.translate("Set device to download mode // Gerät in Download-Modus versetzen")}</button>
+                                            <button onclick="${() => { this.enterDownloadMode() }}">${L.translate("Set device to download mode // Gerät in Download-Modus versetzen")}</button>
                                             ${this.state.enteredDownloadMode ? html`<${FaIcon} icon="fas check"/>` : ''}
                                         </div>
                                     </div>
@@ -74,7 +74,7 @@ class FirmwareUpdateModal extends Component {
                                 <li>${L.translate("The device will automatically reboot. Afterwards reload this page and connect again to the device. // Das Gerät wird automatisch neu starten. Laden Sie diese Seite danach neu und verbinden Sie sich erneut zum Gerät.")}</li>
                             </ol>
                             
-                            <div class="mt-4 ${this.state.enteredDownloadMode ? '': 'd-none'}">
+                            <div class="mt-4 ${this.state.enteredDownloadMode ? '' : 'd-none'}">
                                 ${html`<${FaIcon} icon="fas info-circle"/>`}
                                 ${L.translate("Hint: if you want to cancel the update process, disconnect and reconnect the device from the computer and reload this page. // Hinweis: Wenn Sie das Update abbrechen wollen, trennen und verbinden Sie das Gerät erneut. Laden Sie danach diese Seite neu.")}
                             </div>
@@ -83,11 +83,11 @@ class FirmwareUpdateModal extends Component {
                         <div class="modal-footer" style="margin-top: 4em">
                             <div class="row">
                                 <div class="col">
-                                    <button onclick="${() => this.close()}" class="button-primary ${this.state.enteredDownloadMode ? 'd-none': ''}">
+                                    <button onclick="${() => this.close()}" class="button-primary ${this.state.enteredDownloadMode ? 'd-none' : ''}">
                                         ${html`<${FaIcon} icon="fas times" invert="true"/>`}
                                         ${L.translate('Close // Schließen')}
                                     </button>
-                                    <button onclick="${() => window.location.reload()}" class="button-primary ${this.state.enteredDownloadMode ? '': 'd-none'}">
+                                    <button onclick="${() => window.location.reload()}" class="button-primary ${this.state.enteredDownloadMode ? '' : 'd-none'}">
                                         ${html`<${FaIcon} icon="fas arrow-rotate-right" invert="true"/>`}
                                         ${L.translate('Reload page // Seite neu laden')}
                                     </button>
@@ -112,4 +112,4 @@ FirmwareUpdateModal.style = html`<style>
     }
 </style>`
 
-export {FirmwareUpdateModal};
+export { FirmwareUpdateModal };

@@ -1,12 +1,12 @@
 import { h, Component, render } from '../../../lib/preact.min.js';
 import htm from '../../../lib/htm.min.js';
-import {InputKeyboard} from "../components/InputKeyboard.js";
-import {ManageIR} from "../../../js_fm/ui/components/ManageIR.js";
-import {RadioFieldset} from "../components/RadioFieldset.js";
-import {ATDevice} from "../../communication/ATDevice.js";
-import {InputMacro} from "../components/InputMacro.js";
-import {ActionButton} from "../components/ActionButton.js";
-import {FaIcon} from "../components/FaIcon.js";
+import { InputKeyboard } from "../components/InputKeyboard.js";
+import { ManageIR } from "../../../js_fm/ui/components/ManageIR.js";
+import { RadioFieldset } from "../components/RadioFieldset.js";
+import { ATDevice } from "../../communication/ATDevice.js";
+import { InputMacro } from "../components/InputMacro.js";
+import { ActionButton } from "../components/ActionButton.js";
+import { FaIcon } from "../components/FaIcon.js";
 
 const html = htm.bind(h);
 class ActionEditModal extends Component {
@@ -21,7 +21,7 @@ class ActionEditModal extends Component {
         let currentAtCmdString = ATDevice.getButtonActionATCmd(props.buttonMode.index, props.slot) || C.AT_CMD_NO_CMD;
         let currentAtCmdObject = C.AT_CMDS_ACTIONS.filter(atCmd => currentAtCmdString === atCmd.cmd)[0] || C.AT_CMDS_ACTIONS[0];
         currentAtCmdString = currentAtCmdObject.cmd;
-        let showCategory = currentAtCmdString && currentAtCmdString !== C.AT_CMD_NO_CMD ? C.AT_CMDS_ACTIONS.filter(atCmd => atCmd.cmd === currentAtCmdString)[0].category: ActionEditModal.ALL_CATEGORIES;
+        let showCategory = currentAtCmdString && currentAtCmdString !== C.AT_CMD_NO_CMD ? C.AT_CMDS_ACTIONS.filter(atCmd => atCmd.cmd === currentAtCmdString)[0].category : ActionEditModal.ALL_CATEGORIES;
         let possibleAtCmds = C.AT_CMDS_ACTIONS.filter(atCmd => showCategory === ActionEditModal.ALL_CATEGORIES || atCmd.category === showCategory);
         this.state = {
             showCategory: showCategory,
@@ -134,17 +134,16 @@ class ActionEditModal extends Component {
             atCmdSuffix: ''
         });
     }
-    
+
     render(props) {
         let state = this.state;
         let btnModeV2 = props.buttonMode;
         let btnModeV3 = props.buttonMode;
-        let categoryElements = C.AT_CMD_CATEGORIES.map(cat => {return {value: cat.constant, label: cat.label}});
-        categoryElements = [{value: ActionEditModal.ALL_CATEGORIES, label: 'All categories // Alle Kategorien'}].concat(categoryElements);
+        let categoryElements = C.AT_CMD_CATEGORIES.map(cat => { return { value: cat.constant, label: cat.label } });
+        categoryElements = [{ value: ActionEditModal.ALL_CATEGORIES, label: 'All categories // Alle Kategorien' }].concat(categoryElements);
         let flipmouseAltMode = C.DEVICE_IS_FM && ATDevice.getConfig(C.AT_CMD_FLIPMOUSE_MODE, props.slot) === C.FLIPMOUSE_MODE_ALT.value;
         let flipadAltMode = C.DEVICE_IS_FLIPPAD && [C.FLIPPAD_MODE_PAD_ALTERNATIVE.value, C.FLIPPAD_MODE_STICK_ALTERNATIVE.value].includes(ATDevice.getConfig(C.AT_CMD_FLIPMOUSE_MODE, props.slot));
         let showActionSelectionV2 = C.DEVICE_IS_FABI || flipmouseAltMode || flipadAltMode || btnModeV2.category !== C.BTN_CAT_STICK || state.shouldChangeMode;
-        let showActionSelectionV3 = C.DEVICE_IS_FABI || flipmouseAltMode || flipadAltMode || btnModeV3.category !== C.BTN_CAT_STICK || state.shouldChangeMode;
         let modeLabel = C.DEVICE_IS_FM_OR_PAD ? C.FLIPMOUSE_MODES.filter(mode => mode.value === ATDevice.getConfig(C.AT_CMD_FLIPMOUSE_MODE, props.slot))[0].label : '';
 
 
@@ -167,7 +166,7 @@ class ActionEditModal extends Component {
                                 <span class="pr-2 ${C.DEVICE_IS_FLIPPAD ? '' : 'd-none'}">${L.translate('Pad is currently used for: // Pad wird derzeit verwendet für:')}</span>
                                 <strong>${L.translate(modeLabel)}</strong>
                                 <div>
-                                    <a href="javascript:;" onclick="${() => this.setState({shouldChangeMode: true})}">
+                                    <a href="javascript:;" onclick="${() => this.setState({ shouldChangeMode: true })}">
                                         <span>${L.translate('Deactivate {?} mode for defining an action // {?} deaktivieren um Aktion zu konfigurieren', modeLabel)}</span>
                                     </a>
                                 </div>
@@ -185,23 +184,23 @@ class ActionEditModal extends Component {
                                 <div class="row">
                                     <label for="actionSelect" class="col-md-4">${L.translate('Select action // Aktion auswählen')}</label>
                                     <div class="col-md-8">
-                                        <select id="actionSelect" class="col-12" value="${state.atCmd.cmd}" onchange="${(event) => {this.setState({atCmdSelectedByUser: true}); this.setAtCmd(event.target.value)}}">
+                                        <select id="actionSelect" class="col-12" value="${state.atCmd.cmd}" onchange="${(event) => { this.setState({ atCmdSelectedByUser: true }); this.setAtCmd(event.target.value) }}">
                                             ${state.possibleAtCmds.map(atCmd => html`<option value="${atCmd.cmd}">${L.translate(atCmd.label)}</option>`)}
                                         </select>
                                     </div>
                                 </div>
                                 ${(() => {
-                                    switch (state.atCmd.input) {
-                                        case C.INPUTFIELD_TYPE_TEXT:
-                                            return html`
+                switch (state.atCmd.input) {
+                    case C.INPUTFIELD_TYPE_TEXT:
+                        return html`
                                                 <div class="row">
                                                     <label for="inputText" class="col-md-4">${L.translate(state.atCmd.shortLabel || state.atCmd.label)}</label>
                                                     <div class="col-md-8">
                                                         <input id="inputText" value="${state.atCmdSuffix}" oninput="${(event) => this.setAtCmdSuffix(event.target.value)}" type="text" class="col-12" placeholder="${L.translate('Input text // Text eingeben')}"/>
                                                     </div>
                                                 </div>`;
-                                        case C.INPUTFIELD_TYPE_NUMBER:
-                                            return html`
+                    case C.INPUTFIELD_TYPE_NUMBER:
+                        return html`
                                                 <div class="row">
                                                     <label for="inputText" class="col-md-4">${L.translate(state.atCmd.shortLabel || state.atCmd.label)}</label>
                                                     <div class="col-md-8">
@@ -210,8 +209,8 @@ class ActionEditModal extends Component {
                                                                min="${state.atCmd.minValue}" max="${state.atCmd.maxValue}"/>
                                                     </div>
                                                 </div>`;
-                                        case C.INPUTFIELD_TYPE_SELECT:
-                                            return html`
+                    case C.INPUTFIELD_TYPE_SELECT:
+                        return html`
                                                 <div class="row">
                                                     <label for="inputText" class="col-md-4">${L.translate(state.atCmd.shortLabel || state.atCmd.label)}</label>
                                                     <div class="col-md-8">
@@ -221,17 +220,17 @@ class ActionEditModal extends Component {
                                                         </select>
                                                     </div>
                                                 </div>`;
-                                        case C.INPUTFIELD_TYPE_KEYBOARD:
-                                            return html`<${InputKeyboard} value="${state.atCmdSuffix}"  onchange="${(value) => this.setAtCmdSuffix(value)}"/>`;
-                                        case C.INPUTFIELD_TYPE_MACRO:
-                                            return html`<${InputMacro} value="${state.atCmdSuffix}"  onchange="${(value) => this.setAtCmdSuffix(value)}"/>`;
-                                    }
-                                })()}
+                    case C.INPUTFIELD_TYPE_KEYBOARD:
+                        return html`<${InputKeyboard} value="${state.atCmdSuffix}"  onchange="${(value) => this.setAtCmdSuffix(value)}"/>`;
+                    case C.INPUTFIELD_TYPE_MACRO:
+                        return html`<${InputMacro} value="${state.atCmdSuffix}"  onchange="${(value) => this.setAtCmdSuffix(value)}"/>`;
+                }
+            })()}
                                 ${(() => {
-                                    if (state.atCmd.category === C.AT_CMD_CAT_IR && state.atCmd.input === C.INPUTFIELD_TYPE_SELECT) {
-                                            return html`<${ManageIR} irCmds="${state.selectOptions}" onchange="${(newName) => this.updateIrSelect(newName)}"/>`;
-                                    }
-                                })()}
+                if (state.atCmd.category === C.AT_CMD_CAT_IR && state.atCmd.input === C.INPUTFIELD_TYPE_SELECT) {
+                    return html`<${ManageIR} irCmds="${state.selectOptions}" onchange="${(newName) => this.updateIrSelect(newName)}"/>`;
+                }
+            })()}
                             </div>
                         </div>
     
@@ -278,4 +277,4 @@ ActionEditModal.style = html`<style>
     }
 </style>`
 
-export {ActionEditModal};
+export { ActionEditModal };
