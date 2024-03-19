@@ -13,6 +13,7 @@ class TabVisualization extends Component {
         TabVisualization.instance = this;
         if (ATDevice.isMajorVersion(3)) {
           TabVisualization.BTN_NAMES = ["1", "2", "3", "4", "5", "Sip // Ansaugen", "Puff // Pusten", "Strong Sip // Starkes Ansaugen", "Strong Puff // Starkes Pusten"];
+
         } else {
           TabVisualization.BTN_NAMES = ["1", "2", "3", "4", "5", "6", "7", "8", null, "Sip // Ansaugen", "Puff // Pusten"];
           TabVisualization.BTN_NAMES_LONGPRESS = ["1", "2", "3", "4", "5", "6", "7", "8", null, "Sip // Ansaugen", "Puff // Pusten"]; // ASK: Does it make sense for there only to be six buttons (originally there were six buttons).
