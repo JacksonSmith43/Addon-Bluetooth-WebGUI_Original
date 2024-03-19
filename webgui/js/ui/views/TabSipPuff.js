@@ -48,6 +48,7 @@ class TabSipPuff extends Component {
       if (C.DEVICE_IS_FM) {
         this.state.minRange = Math.max(Math.min(newState.minValue - border, ATDevice.getConfig(C.AT_CMD_SIP_THRESHOLD) - border, ATDevice.getConfig(C.AT_CMD_SIP_STRONG_THRESHOLD) - border), 0);
         this.state.maxRange = Math.min(Math.max(newState.maxValue + border, ATDevice.getConfig(C.AT_CMD_PUFF_THRESHOLD) + border, ATDevice.getConfig(C.AT_CMD_PUFF_STRONG_THRESHOLD) + border), 1023);
+
       } else if (C.DEVICE_IS_FABI) {
         this.state.minRange = Math.max(Math.min(newState.minValue - border, ATDevice.getConfig(C.AT_CMD_SIP_THRESHOLD) - border), 0);
         this.state.maxRange = Math.min(Math.max(newState.maxValue + border, ATDevice.getConfig(C.AT_CMD_PUFF_THRESHOLD) + border), 1023);
@@ -98,22 +99,18 @@ class TabSipPuff extends Component {
   }
 
   resetSlidersPuffSip() {
-    const sipPuffDefaultObject = JSON.parse(DEFAULT_CONFIG); // Parses the DEFAULT_CONFIG string to convert it into an object.
+    const configureMappings = [ // These are array of objects.
+      { constant: C.AT_CMD_SIP_THRESHOLD, defaultValue: 400 },
+      { constant: C.AT_CMD_SIP_STRONG_THRESHOLD, defaultValue: 10 },
+      { constant: C.AT_CMD_PUFF_THRESHOLD, defaultValue: 600 },
+      { constant: C.AT_CMD_PUFF_STRONG_THRESHOLD, defaultValue: 800 }
+    ];
 
-    const configMappings = {
-      [C.AT_CMD_SIP_THRESHOLD]: 'AT_CMD_SIP_STRONG_THRESHOLD',
-      [C.AT_CMD_SIP_STRONG_THRESHOLD]: 'AT_CMD_PUFF_STRONG_THRESHOLD',
-      [C.AT_CMD_PUFF_THRESHOLD]: 'AT_CMD_SIP_STRONG_THRESHOLD',
-      [C.AT_CMD_PUFF_STRONG_THRESHOLD]: 'AT_CMD_PUFF_STRONG_THRESHOLD'
-    };
-
-    const constants = Object.keys(configMappings); // Retrieve an array of constants from the configMappings object.
-
-    constants.forEach(constant => { // // Iterates through each constant in the mappings and passes its corresponding value to the valueChanged function.
-      const configKey = configMappings[constant];
-      const value = sipPuffDefaultObject.config[configKey];
-      this.valueChanged(value, [constant]);
+    configureMappings.forEach(mapping => {     // Iterates through each constant in the mappings and passes its corresponding value to the valueChanged function.
+      const { constant, defaultValue } = mapping; // defaultValue and constant get extracted out of the object mapping. A different way of doing this would be like this: const constant = mapping.constant; It is the same procedure with defaultValue.
+      this.valueChanged(defaultValue, [constant]);
     });
+
 
   }
 
