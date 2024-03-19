@@ -116,7 +116,7 @@ C.BTN_CATEGORIES = [{
     label: 'Strong Sip/Puff // Starkes Ansaugen/Pusten'
 }]
 
-C.BTN_MODES_V2 = [{
+C.BTN_MODES_FABI_V2 = [{
     index: 1,
     label: 'Button 1',
     category: C.BTN_CAT_BTN
@@ -160,7 +160,7 @@ C.BTN_MODES_V2 = [{
 
 
 
-C.BTN_MODES_V3 = [{
+C.BTN_MODES_FABI_V3 = [{
     index: 1,
     label: 'Button 1',
     category: C.BTN_CAT_BTN
@@ -199,7 +199,7 @@ C.BTN_MODES_V3 = [{
 }];
 
 
-C.BTN_MODES_V2_ACTIONLIST = [{
+C.BTN_MODES_FABI_V2_ACTIONLIST = [{
     index: 1,
     label: 'Button 1',
     category: C.BTN_CAT_BTN
@@ -257,7 +257,7 @@ C.BTN_MODES_V2_ACTIONLIST = [{
 
 
 
-C.BTN_MODES_V3_ACTIONLIST = [{
+C.BTN_MODES_FABI_V3_ACTIONLIST = [{ // This can be seen within the actions tab. 
     index: 1,
     label: 'Button 1',
     category: C.BTN_CAT_BTN

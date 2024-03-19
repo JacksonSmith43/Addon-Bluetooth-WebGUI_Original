@@ -174,7 +174,7 @@ C.BTN_CATEGORIES = [{
     label: 'Tap + Slide // Tippen + Wischen'
 }]
 
-C.BTN_MODES = [{
+C.BTN_MODES_PAD = [{
     index: 1,
     label: 'Button 1',
     category: C.BTN_CAT_BTN
@@ -252,7 +252,7 @@ C.BTN_MODES = [{
     category: C.BTN_CAT_STICKPLUS
 }];
 
-C.BTN_MODES_V2_ACTIONLIST = C.BTN_MODES;
+C.BTN_MODES_PAD_ACTIONLIST = C.BTN_MODES_PAD;
 
 C.FLIPPAD_MODE_MOUSE = {
     value: 1,

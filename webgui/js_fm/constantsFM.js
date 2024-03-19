@@ -172,6 +172,7 @@ C.BTN_CAT_BTN = 'BTN_CAT_BTN';
 C.BTN_CAT_STICK = 'BTN_CAT_STICK';
 C.BTN_CAT_SIPPUFF = 'BTN_CAT_SIPPUFF';
 C.BTN_CAT_STICKPLUS = 'BTN_CAT_STICKPLUS';
+
 C.BTN_CATEGORIES = [{
     constant: C.BTN_CAT_BTN,
     label: 'Buttons'
@@ -186,7 +187,7 @@ C.BTN_CATEGORIES = [{
     label: 'Advanced stick actions // Erweiterte Stick-Aktionen'
 }]
 
-C.BTN_MODES = [{
+C.BTN_MODES_FM = [{
     index: 1,
     label: 'Button 1',
     category: C.BTN_CAT_BTN
@@ -264,7 +265,7 @@ C.BTN_MODES = [{
     category: C.BTN_CAT_STICKPLUS
 }];
 
-C.BTN_MODES_V2_ACTIONLIST = C.BTN_MODES;
+C.BTN_MODES_FM_ACTIONLIST = C.BTN_MODES_FM;
 
 C.FLIPMOUSE_MODE_MOUSE = {
     value: 1,
