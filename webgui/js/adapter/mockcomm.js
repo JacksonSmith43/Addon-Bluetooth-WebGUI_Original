@@ -45,7 +45,7 @@ function MockCommunicator() {
 
             } else if (value.indexOf('AT LA') > -1) { // LA = Load All. 
                 let defaultCmds = DEFAULT_CONFIGURATION.join('\n');
-                let cmds = 'Slot:mouse\n' + defaultCmds + '\n'; // ASK: Should this only be used, when test mode has been activated. 
+                let cmds = 'Slot:mouse\n' + defaultCmds + '\n'; 
                 cmds = cmds + 'Slot:test\n' + defaultCmds + '\nEND';
                 resolve(cmds);
 

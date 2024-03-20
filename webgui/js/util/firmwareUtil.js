@@ -51,7 +51,9 @@ firmwareUtil.parseIntelHex = function (data, bufferSize) {
         startLinearAddress = null,
         lineNum = 0, //Line number in the Intel Hex string
         pos = 0; //Current position in the Intel Hex string
+
     const SMALLEST_LINE = 11;
+
     while (pos + SMALLEST_LINE <= data.length) {
         //Parse an entire line
         if (data.charAt(pos++) != ":")
