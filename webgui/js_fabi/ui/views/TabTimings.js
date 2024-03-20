@@ -118,7 +118,7 @@ class TabTimings extends Component {
         
             <div class="row" style="margin-top: 1em">
                 <div class="col col-lg-6">
-                    <${ActionButton}  resetSliderTiming="${() => this.resetSlidersTiming()}" 
+                    <${ActionButton}  resetSlidersTiming="${() => this.resetSlidersTiming()}" 
                     label="Resetting all Thresholds // Alle Schwellenwerte zurücksetzen" faIcon="fas undo" progressLabel="Resetting Thresholds... // Schwellenwerte werden zurückgesetzt..." /> <!-- fas undo is for the icon. -->
                 </div>
             </div>
