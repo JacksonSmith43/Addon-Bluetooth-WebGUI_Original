@@ -103,17 +103,18 @@ class TabActions extends Component {
         let slots = state.viewMode !== VIEW_MODE_SINGLE_SLOT ? ATDevice.getSlots() : [ATDevice.getCurrentSlot()];
         let mobileView = slots.length > this.getMaxPrintableSlots() || state.viewMode === VIEW_MODE_ALL_SLOTS_LIST;
 
-        //  let btnModesPad = C.BTN_MODES_PAD_ACTIONLIST.filter(mode => !this.state.showCategory || mode.category === this.state.showCategory);
-        // let btnModesFM = C.BTN_MODES_FM_ACTIONLIST.filter(mode => !this.state.showCategory || mode.category === this.state.showCategory); // ASK: Is this necessary and Pad. 
-        let btnModesFabiV2 = C.BTN_MODES_FABI_V2_ACTIONLIST.filter(mode => !this.state.showCategory || mode.category === this.state.showCategory);
-        let btnModesFabiV3 = C.BTN_MODES_FABI_V3_ACTIONLIST.filter(mode => !this.state.showCategory || mode.category === this.state.showCategory);
+        // let btnModesPad = C.BTN_MODES_PAD_ACTIONLIST.filter(mode => !this.state.showCategory || mode.category === this.state.showCategory);
+        //console.log("Pad Action Tab: ", btnModesPad);
 
         let modalOpen = !!state.modalBtnMode;
+
         if (modalOpen) {
             L.addClass('body', 'modal-open');
+
         } else {
             L.removeClass('body', 'modal-open');
         }
+
         let categoryElements = C.BTN_CATEGORIES.map(cat => { return { value: cat.constant, label: cat.label } });
         categoryElements = [{ value: null, label: 'All categories // Alle Kategorien' }].concat(categoryElements);
         let slotElements = [{ value: VIEW_MODE_SINGLE_SLOT, label: 'Current slot // Aktueller Slot' }, { value: VIEW_MODE_ALL_SLOTS_TABLE, label: 'All slots (table) // Alle Slots (Tabelle)' }, { value: VIEW_MODE_ALL_SLOTS_LIST, label: 'All slots (list) // Alle Slots (Liste)' }];
@@ -133,69 +134,78 @@ class TabActions extends Component {
                     ${slots.map(slot => html`<span class="${mobileView ? 'col-12' : 'col'} ${this.getSlotStyle(slot)}">Slot "${slot}"</span>`)}
                 </li>
                
-                    ${C.DEVICE_IS_FABI && !(ATDevice.isMajorVersion(3)) ? html`  <!-- This is a glorified if. -->
-                    ${btnModesFabiV2.map((btnMode, index) => html` 
-                        <li class="row ${mobileView ? 'py-3' : 'py-0'}" style="${index % 2 === 0 ? 'background-color: rgb(224 224 224)' : ''}">
-                            <strong class="${mobileView ? 'col-12' : 'col'}">${L.translate(btnMode.label)}</strong>
-                            ${slots.map(slot => html`
-                                <span class="${mobileView ? 'col-12' : 'col'} ${this.getSlotStyle(slot)}">
-                                    <span class="${mobileView ? '' : 'd-none'}">Slot "${slot}": </span>
-                                    <span class="${this.isDisabled(btnMode, slot) ? '' : 'd-none'}" style="font-weight: normal" title="${L.translate('Go to tab "Timings" to configure long press threshold // Gehe zu Tab "Timings" um Schwellenwert für langes Drücken zu konfigurieren')}">
-                                        ${L.translate('(disabled) // (deaktiviert)')}
+                ${C.DEVICE_IS_FABI && !(ATDevice.isMajorVersion(3)) ? (() => {   // This is a glorified if. 
+                let btnModesFabiV2 = C.BTN_MODES_FABI_V2_ACTIONLIST.filter(mode => !this.state.showCategory || mode.category === this.state.showCategory);
+                return html`
+                        ${btnModesFabiV2.map((btnMode, index) => html`
+                            <li class="row ${mobileView ? 'py-3' : 'py-0'}" style="${index % 2 === 0 ? 'background-color: rgb(224 224 224)' : ''}">
+                                <strong class="${mobileView ? 'col-12' : 'col'}">${L.translate(btnMode.label)}</strong>
+                                ${slots.map(slot => html`
+                                    <span class="${mobileView ? 'col-12' : 'col'} ${this.getSlotStyle(slot)}">
+                                        <span class="${mobileView ? '' : 'd-none'}">Slot "${slot}": </span>
+                                        <span class="${this.isDisabled(btnMode, slot) ? '' : 'd-none'}" style="font-weight: normal" title="${L.translate('Go to tab "Timings" to configure long press threshold // Gehe zu Tab "Timings" um Schwellenwert für langes Drücken zu konfigurieren')}">
+                                            ${L.translate('(disabled) // (deaktiviert)')}
+                                        </span>
+                                        <a href="javascript:;" title="${this.getLinkTitle(btnMode, slot)}" class="${this.isDisabled(btnMode, slot) ? 'd-none' : ''}" onclick="${() => this.setState({ modalBtnMode: btnMode, modalSlot: slot })}">
+                                            <span style="${ATDevice.getButtonAction(btnMode.index, slot) === C.AT_CMD_NO_CMD ? 'font-weight: normal' : ''}">${this.getLinkLabel(btnMode, slot)}</span>
+                                            <span class="${!this.showFnName(btnMode, slot) || (!mobileView && state.viewMode === VIEW_MODE_ALL_SLOTS_TABLE && ATDevice.getSlots().length > 1) || !this.getBtnModeParam(btnMode, slot) ? 'd-none' : ''}" style="font-weight: normal"> (${this.getBtnModeParam(btnMode, slot)})</span>
+                                        </a>
                                     </span>
-                                    <a href="javascript:;" title="${this.getLinkTitle(btnMode, slot)}" class="${this.isDisabled(btnMode, slot) ? 'd-none' : ''}" onclick="${() => this.setState({ modalBtnMode: btnMode, modalSlot: slot })}">
-                                        <span style="${ATDevice.getButtonAction(btnMode.index, slot) === C.AT_CMD_NO_CMD ? 'font-weight: normal' : ''}">${this.getLinkLabel(btnMode, slot)}</span>
-                                        <span class="${!this.showFnName(btnMode, slot) || (!mobileView && state.viewMode === VIEW_MODE_ALL_SLOTS_TABLE && ATDevice.getSlots().length > 1) || !this.getBtnModeParam(btnMode, slot) ? 'd-none' : ''}" style="font-weight: normal"> (${this.getBtnModeParam(btnMode, slot)})</span>
-                                    </a>
-                                </span>
-                            `)}
-                        </li>`)}
-                ` : ''} <!-- '' incase it is false. -->
-                
-
-
-                ${C.DEVICE_IS_FABI && (ATDevice.isMajorVersion(3)) ? html`
-                ${btnModesFabiV3.map((btnMode, index) => html`
-                    <li class="row ${mobileView ? 'py-3' : 'py-0'}" style="${index % 2 === 0 ? 'background-color: rgb(224 224 224)' : ''}">
-                        <strong class="${mobileView ? 'col-12' : 'col'}">${L.translate(btnMode.label)}</strong>
-                        ${slots.map(slot => html`
-                            <span class="${mobileView ? 'col-12' : 'col'} ${this.getSlotStyle(slot)}">
-                                <span class="${mobileView ? '' : 'd-none'}">Slot "${slot}": </span>
-                                <span class="${this.isDisabled(btnMode, slot) ? '' : 'd-none'}" style="font-weight: normal" title="${L.translate('Go to tab "Timings" to configure long press threshold // Gehe zu Tab "Timings" um Schwellenwert für langes Drücken zu konfigurieren')}">
-                                    ${L.translate('(disabled) // (deaktiviert)')}
-                                </span>
-                                <a href="javascript:;" title="${this.getLinkTitle(btnMode, slot)}" class="${this.isDisabled(btnMode, slot) ? 'd-none' : ''}" onclick="${() => this.setState({ modalBtnMode: btnMode, modalSlot: slot })}">
-                                    <span style="${ATDevice.getButtonAction(btnMode.index, slot) === C.AT_CMD_NO_CMD ? 'font-weight: normal' : ''}">${this.getLinkLabel(btnMode, slot)}</span>
-                                    <span class="${!this.showFnName(btnMode, slot) || (!mobileView && state.viewMode === VIEW_MODE_ALL_SLOTS_TABLE && ATDevice.getSlots().length > 1) || !this.getBtnModeParam(btnMode, slot) ? 'd-none' : ''}" style="font-weight: normal"> (${this.getBtnModeParam(btnMode, slot)})</span>
-                                </a>
-                            </span>
+                                `)}
+                            </li>
                         `)}
-                    </li>`)}
-            ` : ''}
-
-
-            ${(C.DEVICE_IS_FM) ? html` 
-            ${btnModesFM.map((btnMode, index) => html` 
-                <li class="row ${mobileView ? 'py-3' : 'py-0'}" style="${index % 2 === 0 ? 'background-color: rgb(224 224 224)' : ''}">
-                    <strong class="${mobileView ? 'col-12' : 'col'}">${L.translate(btnMode.label)}</strong>
-                    ${slots.map(slot => html`
-                        <span class="${mobileView ? 'col-12' : 'col'} ${this.getSlotStyle(slot)}">
-                            <span class="${mobileView ? '' : 'd-none'}">Slot "${slot}": </span>
-                            <span class="${this.isDisabled(btnMode, slot) ? '' : 'd-none'}" style="font-weight: normal" title="${L.translate('Go to tab "Timings" to configure long press threshold // Gehe zu Tab "Timings" um Schwellenwert für langes Drücken zu konfigurieren')}">
-                                ${L.translate('(disabled) // (deaktiviert)')}
-                            </span>
-                            <a href="javascript:;" title="${this.getLinkTitle(btnMode, slot)}" class="${this.isDisabled(btnMode, slot) ? 'd-none' : ''}" onclick="${() => this.setState({ modalBtnMode: btnMode, modalSlot: slot })}">
-                                <span style="${ATDevice.getButtonAction(btnMode.index, slot) === C.AT_CMD_NO_CMD ? 'font-weight: normal' : ''}">${this.getLinkLabel(btnMode, slot)}</span>
-                                <span class="${!this.showFnName(btnMode, slot) || (!mobileView && state.viewMode === VIEW_MODE_ALL_SLOTS_TABLE && ATDevice.getSlots().length > 1) || !this.getBtnModeParam(btnMode, slot) ? 'd-none' : ''}" style="font-weight: normal"> (${this.getBtnModeParam(btnMode, slot)})</span>
-                            </a>
-                        </span>
-                    `)}
-                </li>`)}
-
+                    `;
+            })() : ''} <!-- '' incase it is false. -->
                 
-        ` : ''} 
 
+                ${C.DEVICE_IS_FABI && (ATDevice.isMajorVersion(3)) ? (() => {
+                let btnModesFabiV3 = C.BTN_MODES_FABI_V3_ACTIONLIST.filter(mode => !this.state.showCategory || mode.category === this.state.showCategory);
+                return html`
+                        ${btnModesFabiV3.map((btnMode, index) => html`
+                            <li class="row ${mobileView ? 'py-3' : 'py-0'}" style="${index % 2 === 0 ? 'background-color: rgb(224 224 224)' : ''}">
+                                <strong class="${mobileView ? 'col-12' : 'col'}">${L.translate(btnMode.label)}</strong>
+                                ${slots.map(slot => html`
+                                    <span class="${mobileView ? 'col-12' : 'col'} ${this.getSlotStyle(slot)}">
+                                        <span class="${mobileView ? '' : 'd-none'}">Slot "${slot}": </span>
+                                        <span class="${this.isDisabled(btnMode, slot) ? '' : 'd-none'}" style="font-weight: normal" title="${L.translate('Go to tab "Timings" to configure long press threshold // Gehe zu Tab "Timings" um Schwellenwert für langes Drücken zu konfigurieren')}">
+                                            ${L.translate('(disabled) // (deaktiviert)')}
+                                        </span>
+                                        <a href="javascript:;" title="${this.getLinkTitle(btnMode, slot)}" class="${this.isDisabled(btnMode, slot) ? 'd-none' : ''}" onclick="${() => this.setState({ modalBtnMode: btnMode, modalSlot: slot })}">
+                                            <span style="${ATDevice.getButtonAction(btnMode.index, slot) === C.AT_CMD_NO_CMD ? 'font-weight: normal' : ''}">${this.getLinkLabel(btnMode, slot)}</span>
+                                            <span class="${!this.showFnName(btnMode, slot) || (!mobileView && state.viewMode === VIEW_MODE_ALL_SLOTS_TABLE && ATDevice.getSlots().length > 1) || !this.getBtnModeParam(btnMode, slot) ? 'd-none' : ''}" style="font-weight: normal"> (${this.getBtnModeParam(btnMode, slot)})</span>
+                                        </a>
+                                    </span>
+                                `)}
+                            </li>
+                        `)}
+                    `;
+            })() : ''}
+                
 
+            ${C.DEVICE_IS_FM ? (() => {
+                let btnModesFM = C.BTN_MODES_FM_ACTIONLIST.filter(mode => !this.state.showCategory || mode.category === this.state.showCategory);
+                return html`
+                        ${btnModesFM.map((btnMode, index) => html`
+                            <li class="row ${mobileView ? 'py-3' : 'py-0'}" style="${index % 2 === 0 ? 'background-color: rgb(224 224 224)' : ''}">
+                                <strong class="${mobileView ? 'col-12' : 'col'}">${L.translate(btnMode.label)}</strong>
+                                ${slots.map(slot => html`
+                                    <span class="${mobileView ? 'col-12' : 'col'} ${this.getSlotStyle(slot)}">
+                                        <span class="${mobileView ? '' : 'd-none'}">Slot "${slot}": </span>
+                                        <span class="${this.isDisabled(btnMode, slot) ? '' : 'd-none'}" style="font-weight: normal" title="${L.translate('Go to tab "Timings" to configure long press threshold // Gehe zu Tab "Timings" um Schwellenwert für langes Drücken zu konfigurieren')}">
+                                            ${L.translate('(disabled) // (deaktiviert)')}
+                                        </span>
+                                        <a href="javascript:;" title="${this.getLinkTitle(btnMode, slot)}" class="${this.isDisabled(btnMode, slot) ? 'd-none' : ''}" onclick="${() => this.setState({ modalBtnMode: btnMode, modalSlot: slot })}">
+                                            <span style="${ATDevice.getButtonAction(btnMode.index, slot) === C.AT_CMD_NO_CMD ? 'font-weight: normal' : ''}">${this.getLinkLabel(btnMode, slot)}</span>
+                                            <span class="${!this.showFnName(btnMode, slot) || (!mobileView && state.viewMode === VIEW_MODE_ALL_SLOTS_TABLE && ATDevice.getSlots().length > 1) || !this.getBtnModeParam(btnMode, slot) ? 'd-none' : ''}" style="font-weight: normal"> (${this.getBtnModeParam(btnMode, slot)})</span>
+                                        </a>
+                                    </span>
+                                `)}
+                            </li>
+                        `)}
+                    `;
+            })() : ''}
+
+            
         </ul>
             ${modalOpen ? html`<${ActionEditModal} buttonMode="${state.modalBtnMode}" slot="${state.modalSlot}" closeHandler="${() => this.setState({ modalBtnMode: '' })}"/>` : ''}
             ${TabActions.style}
