@@ -34,9 +34,9 @@ class TabTimings extends Component {
         this.setState(state);
     }
 
-    resetSliderTiming() {
+    resetSlidersTiming() {
         const newValue = 0;
-        const constants = [C.AT_CMD_THRESHOLD_LONGPRESS];
+        const constants = [C.AT_CMD_THRESHOLD_LONGPRESS, C.AT_CMD_THRESHOLD_DOUBLEPRESS, C.AT_CMD_THRESHOLD_AUTODWELL, C.AT_CMD_ANTITREMOR_PRESS, C.AT_CMD_ANTITREMOR_RELEASE, C.AT_CMD_ANTITREMOR_IDLE];
         this.valueChanged(newValue, constants);
     }
 
@@ -118,8 +118,8 @@ class TabTimings extends Component {
         
             <div class="row" style="margin-top: 1em">
                 <div class="col col-lg-6">
-                    <${ActionButton}  resetSliderTiming="${() => this.resetSliderTiming()}" 
-                    label="Reset Threshold for long press // Schwellenwert für langes Drücken zurücksetzen" faIcon="fas undo" progressLabel="Resetting Threshold... // Schwellenwert wird zurückgesetzt..." /> <!-- fas undo is for the icon. -->
+                    <${ActionButton}  resetSliderTiming="${() => this.resetSlidersTiming()}" 
+                    label="Resetting all Thresholds // Alle Schwellenwerte zurücksetzen" faIcon="fas undo" progressLabel="Resetting Thresholds... // Schwellenwerte werden zurückgesetzt..." /> <!-- fas undo is for the icon. -->
                 </div>
             </div>
 
