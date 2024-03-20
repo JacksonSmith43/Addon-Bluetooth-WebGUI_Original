@@ -134,7 +134,7 @@ class TabActions extends Component {
                     ${slots.map(slot => html`<span class="${mobileView ? 'col-12' : 'col'} ${this.getSlotStyle(slot)}">Slot "${slot}"</span>`)}
                 </li>
                
-                ${C.DEVICE_IS_FABI && !(ATDevice.isMajorVersion(3)) ? (() => {   // This is a glorified if. 
+                ${C.DEVICE_IS_FABI && !(ATDevice.isMajorVersion(3)) ? (() => { 
                 let btnModesFabiV2 = C.BTN_MODES_FABI_V2_ACTIONLIST.filter(mode => !this.state.showCategory || mode.category === this.state.showCategory);
                 return html`
                         ${btnModesFabiV2.map((btnMode, index) => html`
@@ -155,7 +155,7 @@ class TabActions extends Component {
                             </li>
                         `)}
                     `;
-            })() : ''} <!-- '' incase it is false. -->
+            })() : ''} 
                 
 
                 ${C.DEVICE_IS_FABI && (ATDevice.isMajorVersion(3)) ? (() => {
@@ -205,7 +205,7 @@ class TabActions extends Component {
                     `;
             })() : ''}
 
-            
+
         </ul>
             ${modalOpen ? html`<${ActionEditModal} buttonMode="${state.modalBtnMode}" slot="${state.modalSlot}" closeHandler="${() => this.setState({ modalBtnMode: '' })}"/>` : ''}
             ${TabActions.style}
