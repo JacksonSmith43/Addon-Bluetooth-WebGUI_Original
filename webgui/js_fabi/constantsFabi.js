@@ -21,7 +21,9 @@ C.USB_DEVICE_FILTERS = [
     { usbVendorId: 0x2341, usbProductId: 0x8037 }, // Arduino Pro Micro
     { usbVendorId: 0x2E8A, usbProductId: 0xF10A }, // RaspberryPi PicoW
     { usbVendorId: 0x239A, usbProductId: 0xCAFE } // RaspberryPi PicoW - Adafruit TinyUSB Stack
+    // { usbVendorId: 0x16c0 }, // Teensy 
 ];
+
 
 C.VIEWS = [{
     object: TabActions,
@@ -53,6 +55,7 @@ C.VIEWS = [{
     hash: '#tabVis',
     label: 'Visualization // Visualisierung',
 }];
+
 
 
 C.VIEW_START_HASH = '#tabActions';
@@ -92,6 +95,9 @@ C.AT_CMD_CATEGORIES = [{
 }, {
     constant: C.AT_CMD_CAT_MACRO,
     label: 'Macro // Makro'
+}, {
+    constant: C.AT_CMD_CAT_JOYSTICK,
+    label: 'Joystick'
 }];
 
 
@@ -100,6 +106,8 @@ C.BTN_CAT_BTN = 'BTN_CAT_BTN';
 C.BTN_CAT_BTN_LONGPRESS = 'BTN_CAT_BTN_LONGPRESS';
 C.BTN_CAT_SIPPUFF = 'BTN_CAT_SIPPUFF';
 C.BTN_CAT_STRONG_SIPPUFF = "BTN_CAT_STRONG_SIPPUFF"
+C.BTN_CAT_STICK = 'BTN_CAT_STICK';
+C.BTN_CAT_STICKPLUS = 'BTN_CAT_STICKPLUS';
 
 
 C.BTN_CATEGORIES = [{
@@ -114,7 +122,30 @@ C.BTN_CATEGORIES = [{
 }, {
     constant: C.BTN_CAT_STRONG_SIPPUFF,
     label: 'Strong Sip/Puff // Starkes Ansaugen/Pusten'
+}, {
+    constant: C.BTN_CAT_STICK,
+    label: 'Stick actions // Stick-Aktionen'
+}, {
+    constant: C.BTN_CAT_STICKPLUS,
+    label: 'Advanced stick actions // Erweiterte Stick-Aktionen'
 }]
+
+
+C.AT_CMDS_MACRO = C.AT_CMDS_MACRO || [];
+
+C.AT_CMDS_MACRO = C.AT_CMDS_MACRO.concat([{
+    cmd: C.AT_CMD_JOYSTICK_BUTTON_RELEASE,
+    label: 'Release joystick button // Joystick-Button auslassen',
+    category: C.AT_CMD_CAT_JOYSTICK,
+    input: C.INPUTFIELD_TYPE_NUMBER,
+    minValue: 1,
+    maxValue: 32
+}, {
+    cmd: C.AT_CMD_IR_STOP,
+    label: 'Stop infrared command // Infrarot-Kommando stoppen',
+    category: C.AT_CMD_CAT_IR
+}]);
+
 
 C.BTN_MODES_FABI_V2 = [{
     index: 1,
@@ -181,21 +212,89 @@ C.BTN_MODES_FABI_V3 = [{
     label: 'Button 5',
     category: C.BTN_CAT_BTN
 }, {
+    index: 6,
+    label: 'Button 1 long press // Button 1 lange drücken',
+    category: C.BTN_CAT_BTN_LONGPRESS
+}, {
+    index: 7,
+    label: 'Button 2 long press // Button 2 lange drücken',
+    category: C.BTN_CAT_BTN_LONGPRESS
+}, {
+    index: 8,
+    label: 'Button 3 long press // Button 3 lange drücken',
+    category: C.BTN_CAT_BTN_LONGPRESS
+}, {
+    index: 9,
+    label: 'Button 4 long press // Button 4 lange drücken',
+    category: C.BTN_CAT_BTN_LONGPRESS
+}, {
     index: 10,
+    label: 'Button 5 long press // Button 5 lange drücken',
+    category: C.BTN_CAT_BTN_LONGPRESS
+}, {
+    index: 11,
     label: 'Sip // Ansaugen',
     category: C.BTN_CAT_SIPPUFF
 }, {
-    index: 11,
+    index: 12,
     label: 'Puff // Pusten',
     category: C.BTN_CAT_SIPPUFF
 }, {
-    index: 12,
+    index: 13,
     label: 'Strong Sip // Starkes Ansaugen',
     category: C.BTN_CAT_STRONG_SIPPUFF
 }, {
-    index: 13,
-    label: 'Strong Puff // Starkes Pusten',
+    index: 14,
+    label: 'Strong Puff // Starks Pusten',
     category: C.BTN_CAT_STRONG_SIPPUFF
+}, {
+    index: 15,
+    label: 'Stick Up // Stick nach oben',
+    category: C.BTN_CAT_STICK
+}, {
+    index: 16,
+    label: 'Stick Down // Stick nach unten',
+    category: C.BTN_CAT_STICK
+}, {
+    index: 17,
+    label: 'Stick Left // Stick nach links',
+    category: C.BTN_CAT_STICK
+}, {
+    index: 18,
+    label: 'Stick Right // Stick nach rechts',
+    category: C.BTN_CAT_STICK
+}, {
+    index: 19,
+    label: 'Strong Sip + Up // Stark ansaugen + nach oben',
+    category: C.BTN_CAT_STICKPLUS
+}, {
+    index: 20,
+    label: 'Strong Sip + Down // Stark ansaugen + nach unten',
+    category: C.BTN_CAT_STICKPLUS
+}, {
+    index: 21,
+    label: 'Strong Sip + Left // Stark ansaugen + nach links',
+    category: C.BTN_CAT_STICKPLUS
+}, {
+    index: 22,
+    label: 'Strong Sip + Right // Stark ansaugen + nach rechts',
+    category: C.BTN_CAT_STICKPLUS
+}, {
+    index: 23,
+    label: 'Strong Puff + Up // Stark pusten + nach oben',
+    category: C.BTN_CAT_STICKPLUS
+}, {
+    index: 24,
+    label: 'Strong Puff + Down // Stark pusten + nach unten',
+    category: C.BTN_CAT_STICKPLUS
+}, {
+    index: 25,
+    label: 'Strong Puff + Left // Stark pusten + nach links',
+    category: C.BTN_CAT_STICKPLUS
+}, {
+    index: 26,
+    label: 'Strong Puff + Right // Stark pusten + nach rechts',
+    category: C.BTN_CAT_STICKPLUS
 }];
 
 
@@ -251,7 +350,6 @@ C.BTN_MODES_FABI_V2_ACTIONLIST = [{
     index: 11,
     label: 'Puff // Pusten',
     category: C.BTN_CAT_SIPPUFF
-
 }];
 
 
@@ -278,40 +376,87 @@ C.BTN_MODES_FABI_V3_ACTIONLIST = [{ // This can be seen within the actions tab.
     label: 'Button 5',
     category: C.BTN_CAT_BTN
 }, {
-    index: 7,
+    index: 6,
     label: 'Button 1 long press // Button 1 lange drücken',
     category: C.BTN_CAT_BTN_LONGPRESS
 }, {
-    index: 8,
+    index: 7,
     label: 'Button 2 long press // Button 2 lange drücken',
     category: C.BTN_CAT_BTN_LONGPRESS
 }, {
-    index: 9,
+    index: 8,
     label: 'Button 3 long press // Button 3 lange drücken',
     category: C.BTN_CAT_BTN_LONGPRESS
 }, {
-    index: 10,
+    index: 9,
     label: 'Button 4 long press // Button 4 lange drücken',
     category: C.BTN_CAT_BTN_LONGPRESS
 }, {
-    index: 11,
+    index: 10,
     label: 'Button 5 long press // Button 5 lange drücken',
     category: C.BTN_CAT_BTN_LONGPRESS
 }, {
-    index: 12,
+    index: 11,
     label: 'Sip // Ansaugen',
     category: C.BTN_CAT_SIPPUFF
 }, {
-    index: 13,
+    index: 12,
     label: 'Puff // Pusten',
     category: C.BTN_CAT_SIPPUFF
 }, {
-    index: 14,
+    index: 13,
     label: 'Strong Sip // Starkes Ansaugen',
     category: C.BTN_CAT_STRONG_SIPPUFF
 }, {
-    index: 15, // CHECK: No clue whether the index can simply be incremented (this applys to all strong Sip/Puffs).
+    index: 14, // CHECK: No clue whether the index can simply be incremented (this applys to all strong Sip/Puffs).
     label: 'Strong Puff // Starks Pusten',
     category: C.BTN_CAT_STRONG_SIPPUFF
-
+}, {
+    index: 15,
+    label: 'Stick Up // Stick nach oben',
+    category: C.BTN_CAT_STICK
+}, {
+    index: 16,
+    label: 'Stick Down // Stick nach unten',
+    category: C.BTN_CAT_STICK
+}, {
+    index: 17,
+    label: 'Stick Left // Stick nach links',
+    category: C.BTN_CAT_STICK
+}, {
+    index: 18,
+    label: 'Stick Right // Stick nach rechts',
+    category: C.BTN_CAT_STICK
+}, {
+    index: 19,
+    label: 'Strong Sip + Up // Stark ansaugen + nach oben',
+    category: C.BTN_CAT_STICKPLUS
+}, {
+    index: 20,
+    label: 'Strong Sip + Down // Stark ansaugen + nach unten',
+    category: C.BTN_CAT_STICKPLUS
+}, {
+    index: 21,
+    label: 'Strong Sip + Left // Stark ansaugen + nach links',
+    category: C.BTN_CAT_STICKPLUS
+}, {
+    index: 22,
+    label: 'Strong Sip + Right // Stark ansaugen + nach rechts',
+    category: C.BTN_CAT_STICKPLUS
+}, {
+    index: 23,
+    label: 'Strong Puff + Up // Stark pusten + nach oben',
+    category: C.BTN_CAT_STICKPLUS
+}, {
+    index: 24,
+    label: 'Strong Puff + Down // Stark pusten + nach unten',
+    category: C.BTN_CAT_STICKPLUS
+}, {
+    index: 25,
+    label: 'Strong Puff + Left // Stark pusten + nach links',
+    category: C.BTN_CAT_STICKPLUS
+}, {
+    index: 26,
+    label: 'Strong Puff + Right // Stark pusten + nach rechts',
+    category: C.BTN_CAT_STICKPLUS
 }];

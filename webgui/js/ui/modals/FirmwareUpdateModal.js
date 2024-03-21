@@ -38,7 +38,6 @@ class FirmwareUpdateModal extends Component {
         let index = props.fwInfo.originalDownloadUrl.lastIndexOf("/");
         let fwFileName = props.fwInfo.originalDownloadUrl.substring(index + 1);
 
-        // if (C.DEVICE_IS_FABI || C.DEVICE_IS_FM_OR_PAD) {
         return html`
             <div class="modal-mask text-modal fwmodal">
                 <div class="modal-wrapper">
@@ -100,8 +99,9 @@ class FirmwareUpdateModal extends Component {
                 </div>
             </div>
             ${FirmwareUpdateModal.style}`
-        //   }
     }
+
+
 }
 
 FirmwareUpdateModal.style = html`<style>
