@@ -45,7 +45,7 @@ function MockCommunicator() {
 
             } else if (value.indexOf('AT LA') > -1) { // LA = Load All. 
                 let defaultCmds = DEFAULT_CONFIGURATION.join('\n');
-                let cmds = 'Slot:mouse\n' + defaultCmds + '\n'; 
+                let cmds = 'Slot:mouse\n' + defaultCmds + '\n';
                 cmds = cmds + 'Slot:test\n' + defaultCmds + '\nEND';
                 resolve(cmds);
 
@@ -58,7 +58,7 @@ function MockCommunicator() {
                 mock.deviceSlotNr = mock.slotNames.indexOf(slotName);
                 resolve('OK');
 
-            } else if (value.indexOf('AT IL') > -1) {
+            } else if (value.indexOf('AT IL') > -1) { // IL = Lists all stored infrared command names.
                 resolve('IRCommand0:play\nIRCommand1:pause\nIRCommand2:stop');
 
             } else if (value.indexOf('AT ID') > -1) {

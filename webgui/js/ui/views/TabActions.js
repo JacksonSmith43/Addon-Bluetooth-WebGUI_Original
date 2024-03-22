@@ -118,6 +118,7 @@ class TabActions extends Component {
     let categoryElements = C.BTN_CATEGORIES.map(cat => { return { value: cat.constant, label: cat.label } });
     categoryElements = [{ value: null, label: 'All categories // Alle Kategorien' }].concat(categoryElements);
     let slotElements = [{ value: VIEW_MODE_SINGLE_SLOT, label: 'Current slot // Aktueller Slot' }, { value: VIEW_MODE_ALL_SLOTS_TABLE, label: 'All slots (table) // Alle Slots (Tabelle)' }, { value: VIEW_MODE_ALL_SLOTS_LIST, label: 'All slots (list) // Alle Slots (Liste)' }];
+
     return html`<div id="tabActions">
     <h2>${L.translate('Action configuration // Aktionen-Konfiguration')}</h2>
    <div class="filter-buttons mb-3">
@@ -133,9 +134,9 @@ class TabActions extends Component {
            ${slots.map(slot => html`<span class="${mobileView ? 'col-12' : 'col'} ${this.getSlotStyle(slot)}">Slot "${slot}"</span>`)}
        </li>
       
-       ${C.DEVICE_IS_FABI && !(ATDevice.isMajorVersion(3)) ? (() => { 
-       let btnModesFabiV2 = C.BTN_MODES_FABI_V2_ACTIONLIST.filter(mode => !this.state.showCategory || mode.category === this.state.showCategory);
-       return html`
+       ${C.DEVICE_IS_FABI && !(ATDevice.isMajorVersion(3)) ? (() => {
+        let btnModesFabiV2 = C.BTN_MODES_FABI_V2_ACTIONLIST.filter(mode => !this.state.showCategory || mode.category === this.state.showCategory);
+        return html`
                ${btnModesFabiV2.map((btnMode, index) => html`
                    <li class="row ${mobileView ? 'py-3' : 'py-0'}" style="${index % 2 === 0 ? 'background-color: rgb(224 224 224)' : ''}">
                        <strong class="${mobileView ? 'col-12' : 'col'}">${L.translate(btnMode.label)}</strong>
@@ -154,11 +155,11 @@ class TabActions extends Component {
                    </li>
                `)}
            `;
-   })() : ''} 
+      })() : ''} 
        
        ${C.DEVICE_IS_FABI && (ATDevice.isMajorVersion(3)) ? (() => {
-       let btnModesFabiV3 = C.BTN_MODES_FABI_V3_ACTIONLIST.filter(mode => !this.state.showCategory || mode.category === this.state.showCategory);
-       return html`
+        let btnModesFabiV3 = C.BTN_MODES_FABI_V3_ACTIONLIST.filter(mode => !this.state.showCategory || mode.category === this.state.showCategory);
+        return html`
                ${btnModesFabiV3.map((btnMode, index) => html`
                    <li class="row ${mobileView ? 'py-3' : 'py-0'}" style="${index % 2 === 0 ? 'background-color: rgb(224 224 224)' : ''}">
                        <strong class="${mobileView ? 'col-12' : 'col'}">${L.translate(btnMode.label)}</strong>
@@ -177,11 +178,11 @@ class TabActions extends Component {
                    </li>
                `)}
            `;
-   })() : ''}
+      })() : ''}
        
    ${C.DEVICE_IS_FM ? (() => {
-       let btnModesFM = C.BTN_MODES_FM_ACTIONLIST.filter(mode => !this.state.showCategory || mode.category === this.state.showCategory);
-       return html`
+        let btnModesFM = C.BTN_MODES_FM_ACTIONLIST.filter(mode => !this.state.showCategory || mode.category === this.state.showCategory);
+        return html`
                ${btnModesFM.map((btnMode, index) => html`
                    <li class="row ${mobileView ? 'py-3' : 'py-0'}" style="${index % 2 === 0 ? 'background-color: rgb(224 224 224)' : ''}">
                        <strong class="${mobileView ? 'col-12' : 'col'}">${L.translate(btnMode.label)}</strong>
@@ -200,7 +201,8 @@ class TabActions extends Component {
                    </li>
                `)}
            `;
-   })() : ''}
+      })() : ''}
+   
 </ul>
    ${modalOpen ? html`<${ActionEditModal} buttonMode="${state.modalBtnMode}" slot="${state.modalSlot}" closeHandler="${() => this.setState({ modalBtnMode: '' })}"/>` : ''}
    ${TabActions.style}

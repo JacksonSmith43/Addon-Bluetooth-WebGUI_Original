@@ -77,10 +77,12 @@ function parseLiveData(data) {
     }
 
     let interval = _liveValueHandler ? 0 : 300;
+
     if (new Date().getTime() - _lastLiveValueParse > interval) {
         _lastLiveValueParse = new Date().getTime();
         let valArray = data.split(':')[1].split(',');
         _liveData[FABI.LIVE_PRESSURE] = parseInt(valArray[0]);
+        
         if (valArray[1]) {
             _liveData[FABI.LIVE_BUTTONS] = valArray[1].split('').map(v => v === "1");
         }
