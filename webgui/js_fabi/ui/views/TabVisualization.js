@@ -12,7 +12,7 @@ class TabVisualization extends Component {
 
         TabVisualization.instance = this;
         if (ATDevice.isMajorVersion(3)) {
-          TabVisualization.BTN_NAMES = ["1", "2", "3", "4", "5", null, null, null, null, null, "Sip // Ansaugen", "Puff // Pusten", "Strong Sip // Starkes Ansaugen", "Strong Puff // Starkes Pusten", "Stick Up // Stick nach oben", "Stick Down // Stick nach unten", "Stick Left // Stick nach links", "Stick Right // Stick nach rechts"];
+          TabVisualization.BTN_NAMES = ["1", "2", "3", "4", "5", null, null, null, null, null, "Sip // Ansaugen", "Puff // Pusten", "Strong Sip // Starkes Ansaugen", "Strong Puff // Starkes Pusten"];
 
         } else {
           TabVisualization.BTN_NAMES = ["1", "2", "3", "4", "5", "6", "7", "8", null, "Sip // Ansaugen", "Puff // Pusten"];
