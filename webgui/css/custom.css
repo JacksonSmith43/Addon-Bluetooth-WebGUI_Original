@@ -193,9 +193,7 @@ label {
     max-height: 350px;
 }
 
-@media (prefers-color-scheme: dark) {
-
-    /* This makes it so that within full-vis-size it is inverted. */
+@media (prefers-color-scheme: dark) { /* This makes it so that within full-vis-size it is inverted. */
     .full-vis-size {
         filter: invert(1%);
     }
@@ -203,6 +201,10 @@ label {
 
 @media (prefers-color-scheme: dark) {
     #tab-puff-container {
+        filter: invert(1%);
+    }
+
+    #tabVisBtnSipVis {
         filter: invert(1%);
     }
 }
