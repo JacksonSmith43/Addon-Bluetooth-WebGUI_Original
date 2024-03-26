@@ -193,10 +193,10 @@ label {
     max-height: 350px;
 }
 
-@media (prefers-color-scheme: dark) { /* This makes it so that within full-vis-size it is inverted. */
-    .full-vis-size {
-        filter: invert(1%);
-    }
+@media (prefers-color-scheme: dark) { /* This makes it so that within posVis it is inverted. */ /* ASK: Whether the colour is okay, in both modes (used to be blue). 1% is the best option for both, but the back-layer is not really visible then.*/
+   #posVis{
+    filter: invert(30%);
+   }
 }
 
 @media (prefers-color-scheme: dark) {
@@ -207,6 +207,7 @@ label {
     #tabVisBtnSipVis {
         filter: invert(1%);
     }
+   
 }
 
 .color-lightcyan {
