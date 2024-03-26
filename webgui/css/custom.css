@@ -201,6 +201,12 @@ label {
     }
 }
 
+@media (prefers-color-scheme: dark) {
+    #tab-puff-container {
+        filter: invert(1%);
+    }
+}
+
 .color-lightcyan {
     background-color: #9be7ff;
 }
