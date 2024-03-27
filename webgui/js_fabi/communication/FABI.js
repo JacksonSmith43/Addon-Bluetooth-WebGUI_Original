@@ -1,6 +1,6 @@
-import {ATDevice} from "../../js/communication/ATDevice.js";
-import {localStorageService} from "../../js/localStorageService.js";
-import {ProMicroFirmwareUpdater} from "./ProMicroFirmwareUpdater.js";
+import { ATDevice } from "../../js/communication/ATDevice.js";
+import { localStorageService } from "../../js/localStorageService.js";
+import { ProMicroFirmwareUpdater } from "./ProMicroFirmwareUpdater.js";
 
 let FABI = {};
 FABI.LIVE_PRESSURE = 'LIVE_PRESSURE';
@@ -22,7 +22,7 @@ FABI.getIRCommands = function () {
 };
 
 FABI.recordIrCommand = function (name) {
-    return ATDevice.sendAtCmdWithResult(C.AT_CMD_IR_RECORD, name, {timeout: 11000}).then(result => {
+    return ATDevice.sendAtCmdWithResult(C.AT_CMD_IR_RECORD, name, { timeout: 11000 }).then(result => {
         let success = result && result.indexOf(_AT_CMD_IR_TIMEOUT_RESPONSE) === -1;
         return Promise.resolve(success);
     });
@@ -50,20 +50,39 @@ FABI.resetMinMaxLiveValues = function () {
 };
 
 FABI.updateFirmware = async function (url, progressHandler, dontReset) {
-    localStorageService.setFirmwareDownloadUrl('');
+    localStorageService.setFirmwareDownloadUrl(url);
     let serialCommunicator = ATDevice.getCommunicator();
+    let failed = false;
+
     if (!dontReset) {
         await serialCommunicator.close();
         await ProMicroFirmwareUpdater.resetDevice(serialCommunicator.getSerialPort());
     }
-    await ProMicroFirmwareUpdater.uploadFirmware(url, progressHandler);
-    if (!window.location.href.includes(C.SUCCESS_FIRMWAREUPDATE)) {
-        window.location.replace(window.location.href = window.location.href + '?' + C.SUCCESS_FIRMWAREUPDATE);
-    }
-    setTimeout(() => {
+    await ProMicroFirmwareUpdater.uploadFirmware(url, progressHandler).catch(() => {
+        failed = true;
         window.location.reload();
-    }, 100);
+    });
+
+    if (!failed) {
+        localStorageService.setFirmwareDownloadUrl('');
+
+        if (!window.location.href.includes(C.SUCCESS_FIRMWAREUPDATE)) {
+            window.location.replace(window.location.href = window.location.href + '?' + C.SUCCESS_FIRMWAREUPDATE);
+        }
+        setTimeout(() => {
+            window.location.reload();
+        }, 100);
+    }
 }
+
+FABI.enterFwDownloadMode = async function () {
+    if (ATDevice.isMajorVersion(3)) {
+        let serialCommunicator = ATDevice.getCommunicator();
+        await serialCommunicator.close();
+        await ProMicroFirmwareUpdater.resetDevice(serialCommunicator.getSerialPort());
+    }
+}
+
 
 function parseLiveData(data) {
     if (!ATDevice.parseLiveData) {
@@ -82,7 +101,7 @@ function parseLiveData(data) {
         _lastLiveValueParse = new Date().getTime();
         let valArray = data.split(':')[1].split(',');
         _liveData[FABI.LIVE_PRESSURE] = parseInt(valArray[0]);
-        
+
         if (valArray[1]) {
             _liveData[FABI.LIVE_BUTTONS] = valArray[1].split('').map(v => v === "1");
         }
@@ -103,5 +122,5 @@ if (C.DEVICE_IS_FABI) {
     ATDevice.setLiveValueHandler(parseLiveData);
 }
 
-export {FABI};
+export { FABI };
 export default FABI;

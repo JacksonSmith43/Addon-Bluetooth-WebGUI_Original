@@ -179,7 +179,7 @@ firmwareUtil.updateDeviceFirmware = function (progressHandler) {
 
         let message, deviceName;
 
-        if ((ATDevice.isMajorVersion(3) < 3) && C.DEVICE_IS_FABI) {
+        if ((ATDevice.isMajorVersion(2)) || (ATDevice.isMajorVersion(1)) && C.DEVICE_IS_FABI) {
             message = 'Fabi V2 or older: Do you want to update the firmware to version {?}? After confirming this message you have to re-select the device ("{?}") in a browser popup. Keep this tab open and in foreground while updating! // Möchten Sie die Firmware auf Version {?} aktualisieren? Nach Bestätigung dieser Meldung müssen Sie das Gerät erneut in einem Browser-Popup auswählen ("{?}"). Lassen Sie diesen Tab während dem Update im Vordergrund geöffnet!';
             deviceName = C.DEVICE_IS_FM_OR_PAD ? L.translate('Unknown device // Unbekanntes Gerät') : 'Arduino Leonardo/Mirco';
 

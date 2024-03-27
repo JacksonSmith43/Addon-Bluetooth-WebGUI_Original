@@ -108,7 +108,7 @@ C.BTN_CAT_BTN_LONGPRESS = 'BTN_CAT_BTN_LONGPRESS';
 C.BTN_CAT_SIPPUFF = 'BTN_CAT_SIPPUFF';
 C.BTN_CAT_STRONG_SIPPUFF = "BTN_CAT_STRONG_SIPPUFF"
 C.BTN_CAT_STICK = 'BTN_CAT_STICK';
-C.BTN_CAT_STICKPLUS = 'BTN_CAT_STICKPLUS';
+C.BTN_CAT_BTN_STRONG_SIPPUFF = 'BTN_CAT_BTN_STRONG_SIPPUFF';
 
 
 C.BTN_CATEGORIES = [{
@@ -127,8 +127,8 @@ C.BTN_CATEGORIES = [{
     constant: C.BTN_CAT_STICK,
     label: 'Stick actions // Stick-Aktionen'
 }, {
-    constant: C.BTN_CAT_STICKPLUS,
-    label: 'Advanced stick actions // Erweiterte Stick-Aktionen'
+    constant: C.BTN_CAT_BTN_STRONG_SIPPUFF,
+    label: 'Combine button and strong Sip/Puff actions // Kombiniere button und starke Ansaugen/Pusten Aktionen'
 }]
 
 
@@ -328,36 +328,36 @@ C.BTN_MODES_FABI_V3 = [{
     category: C.BTN_CAT_STICK
 }, {
     index: 19,
-    label: 'Strong Sip + Up // Stark ansaugen + nach oben',
-    category: C.BTN_CAT_STICKPLUS
+    label: 'Strong Sip + Button 2 // Stark ansaugen + Button 2',
+    category: C.BTN_CAT_BTN_STRONG_SIPPUFF
 }, {
     index: 20,
-    label: 'Strong Sip + Down // Stark ansaugen + nach unten',
-    category: C.BTN_CAT_STICKPLUS
+    label: 'Strong Sip + Button 3 // Stark ansaugen + Button 3',
+    category: C.BTN_CAT_BTN_STRONG_SIPPUFF
 }, {
     index: 21,
-    label: 'Strong Sip + Left // Stark ansaugen + nach links',
-    category: C.BTN_CAT_STICKPLUS
+    label: 'Strong Sip + Button 4 // Stark ansaugen + Button 4',
+    category: C.BTN_CAT_BTN_STRONG_SIPPUFF
 }, {
     index: 22,
-    label: 'Strong Sip + Right // Stark ansaugen + nach rechts',
-    category: C.BTN_CAT_STICKPLUS
+    label: 'Strong Sip + Button 5 // Stark ansaugen + Button 5',
+    category: C.BTN_CAT_BTN_STRONG_SIPPUFF
 }, {
     index: 23,
-    label: 'Strong Puff + Up // Stark pusten + nach oben',
-    category: C.BTN_CAT_STICKPLUS
+    label: 'Strong Puff + Button 2 // Stark pusten + Button 2',
+    category: C.BTN_CAT_BTN_STRONG_SIPPUFF
 }, {
     index: 24,
-    label: 'Strong Puff + Down // Stark pusten + nach unten',
-    category: C.BTN_CAT_STICKPLUS
+    label: 'Strong Puff + Button 3 // Stark pusten + Button 3',
+    category: C.BTN_CAT_BTN_STRONG_SIPPUFF
 }, {
     index: 25,
-    label: 'Strong Puff + Left // Stark pusten + nach links',
-    category: C.BTN_CAT_STICKPLUS
+    label: 'Strong Puff + Button 4 // Stark pusten + Button 4',
+    category: C.BTN_CAT_BTN_STRONG_SIPPUFF
 }, {
     index: 26,
-    label: 'Strong Puff + Right // Stark pusten + nach rechts',
-    category: C.BTN_CAT_STICKPLUS
+    label: 'Strong Puff + Button 5 // Stark pusten + Button 5',
+    category: C.BTN_CAT_BTN_STRONG_SIPPUFF
 }];
 
 
@@ -492,34 +492,34 @@ C.BTN_MODES_FABI_V3_ACTIONLIST = [{ // This can be seen within the actions tab.
     category: C.BTN_CAT_STICK
 }, {
     index: 19,
-    label: 'Strong Sip + Up // Stark ansaugen + nach oben',
-    category: C.BTN_CAT_STICKPLUS
+    label: 'Strong Sip + Button 2 // Stark ansaugen + Button 2',
+    category: C.BTN_CAT_BTN_STRONG_SIPPUFF
 }, {
     index: 20,
-    label: 'Strong Sip + Down // Stark ansaugen + nach unten',
-    category: C.BTN_CAT_STICKPLUS
+    label: 'Strong Sip + Button 3 // Stark ansaugen + Button 3',
+    category: C.BTN_CAT_BTN_STRONG_SIPPUFF
 }, {
     index: 21,
-    label: 'Strong Sip + Left // Stark ansaugen + nach links',
-    category: C.BTN_CAT_STICKPLUS
+    label: 'Strong Sip + Button 4 // Stark ansaugen + Button 4',
+    category: C.BTN_CAT_BTN_STRONG_SIPPUFF
 }, {
     index: 22,
-    label: 'Strong Sip + Right // Stark ansaugen + nach rechts',
-    category: C.BTN_CAT_STICKPLUS
+    label: 'Strong Sip + Button 5 // Stark ansaugen + Button 5',
+    category: C.BTN_CAT_BTN_STRONG_SIPPUFF
 }, {
     index: 23,
-    label: 'Strong Puff + Up // Stark pusten + nach oben',
-    category: C.BTN_CAT_STICKPLUS
+    label: 'Strong Puff + Button 2 // Stark pusten + Button 2',
+    category: C.BTN_CAT_BTN_STRONG_SIPPUFF
 }, {
     index: 24,
-    label: 'Strong Puff + Down // Stark pusten + nach unten',
-    category: C.BTN_CAT_STICKPLUS
+    label: 'Strong Puff + Button 3 // Stark pusten + Button 3',
+    category: C.BTN_CAT_BTN_STRONG_SIPPUFF
 }, {
     index: 25,
-    label: 'Strong Puff + Left // Stark pusten + nach links',
-    category: C.BTN_CAT_STICKPLUS
+    label: 'Strong Puff + Button 4 // Stark pusten + Button 4',
+    category: C.BTN_CAT_BTN_STRONG_SIPPUFF
 }, {
     index: 26,
-    label: 'Strong Puff + Right // Stark pusten + nach rechts',
-    category: C.BTN_CAT_STICKPLUS
+    label: 'Strong Puff + Button 5 // Stark pusten + Button 5',
+    category: C.BTN_CAT_BTN_STRONG_SIPPUFF
 }];

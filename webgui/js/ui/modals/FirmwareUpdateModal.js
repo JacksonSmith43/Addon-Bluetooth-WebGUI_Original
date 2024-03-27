@@ -101,6 +101,7 @@ class FirmwareUpdateModal extends Component {
                 </div>
             </div>
             ${FirmwareUpdateModal.style}`
+            
     }
 
 
