@@ -8,10 +8,12 @@ class FirmwareUpdateModal extends Component {
 
     constructor(props) {
         super();
+
         this.props = props;
         this.state = {
             enteredDownloadMode: false
         }
+       
     }
 
     enterDownloadMode() {

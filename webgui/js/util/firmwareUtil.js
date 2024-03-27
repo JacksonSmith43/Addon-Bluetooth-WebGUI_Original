@@ -179,17 +179,17 @@ firmwareUtil.updateDeviceFirmware = function (progressHandler) {
 
         let message, deviceName;
 
-        if (!(ATDevice.isMajorVersion(3)) && C.DEVICE_IS_FABI) {
-            message = 'Fabi V2: Do you want to update the firmware to version {?}? After confirming this message you have to re-select the device ("{?}") in a browser popup. Keep this tab open and in foreground while updating! // Möchten Sie die Firmware auf Version {?} aktualisieren? Nach Bestätigung dieser Meldung müssen Sie das Gerät erneut in einem Browser-Popup auswählen ("{?}"). Lassen Sie diesen Tab während dem Update im Vordergrund geöffnet!';
+        if ((ATDevice.isMajorVersion(3) < 3) && C.DEVICE_IS_FABI) {
+            message = 'Fabi V2 or older: Do you want to update the firmware to version {?}? After confirming this message you have to re-select the device ("{?}") in a browser popup. Keep this tab open and in foreground while updating! // Möchten Sie die Firmware auf Version {?} aktualisieren? Nach Bestätigung dieser Meldung müssen Sie das Gerät erneut in einem Browser-Popup auswählen ("{?}"). Lassen Sie diesen Tab während dem Update im Vordergrund geöffnet!';
             deviceName = C.DEVICE_IS_FM_OR_PAD ? L.translate('Unknown device // Unbekanntes Gerät') : 'Arduino Leonardo/Mirco';
 
         } else if (ATDevice.isMajorVersion(3) && C.DEVICE_IS_FABI) {
             message = 'Fabi V3: Do you want to update the firmware to version {?}? After confirming this message you have to add the .UF2 file in the ("{?}") device and save it. // Möchten Sie die Firmware auf Version {?} aktualisieren? Nach Bestätigung dieser Meldung müssen Sie die .UF2 Datei im ("{?}") Gerät hinzufügen und speichern.';
             deviceName = C.DEVICE_IS_FM_OR_PAD ? L.translate('Unknown device // Unbekanntes Gerät') : 'RPi PicoW'; // ASK: Whether the device is correct. 
 
-        } else if (C.DEVICE_IS_FM_OR_PAD) {
+        } else if (C.DEVICE_IS_FM_OR_PAD) { // This is completely useless. For some weird reason it never comes in here and just uses the Modal (FirmwareUpdateModal).
             message = 'Reset Firmware on FM.';
-
+            deviceName = C.DEVICE_IS_FABI ? L.translate('Unknown device // Unbekanntes Gerät') : 'Arduino Nano RP2040 Connect';
         }
 
         if (!confirm(L.translate(message, result.version, deviceName))) {
