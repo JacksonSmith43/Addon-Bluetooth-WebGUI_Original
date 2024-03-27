@@ -15,14 +15,14 @@ class FaIcon extends Component {
         if (!this.props.icon) {
             return '';
         }
-        return html`<img class="${clasz}" src="${path}" aria-hidden="true" style="${`display: inline-block; height: ${height}; margin: 0 0.5em; vertical-align: middle;`} ${this.props.invert ? 'filter: invert(1);' : ''}"/>`;
+       // return html`<img class="${clasz}" src="${path}" aria-hidden="true" style="${`display: inline-block; height: ${height}; margin: 0 0.5em; vertical-align: middle;`} ${this.props.invert ? 'filter: invert(1);' : ''}"/>`;
 
         /* This makes it so that the symbols are inverted. ASK: Is it better with or without this. The one above does not work. */
-        /* return html` 
+         return html` 
         <object type="image/svg+xml" data="${path}" aria-hidden="true" class="${clasz}" style="height: ${height}; margin: 0 0.5em; vertical-align: middle;">
             ${props.invert ? '<param name="filter" value="invert(80%)">' : ''}
         </object>
-        `;*/
+        `;
     }
 }
 

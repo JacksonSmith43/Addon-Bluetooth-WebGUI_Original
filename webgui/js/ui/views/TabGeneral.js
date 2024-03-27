@@ -159,8 +159,8 @@ class TabGeneral extends Component {
             </div>
             <div class="row mt-3">
                 <div class="col-12 col-md-4">
-                    <button class="col-12" onclick="${() => this.updateFirmware()}" disabled="${this.state.mainUpgradeProgress}">
-                        <span class="${this.state.mainUpgradeProgress ? 'd-none' : ''}">
+                    <button class="col-12" onclick="${() => this.updateFirmware()}" disabled="${this.state.mainUpgradeProgress}"> <!-- Once the button has been pressed, it will be deactivated. -->
+                        <span class="${this.state.mainUpgradeProgress ? 'd-none' : ''}"> //// Continue.
                             <span class="sr-only">${C.CURRENT_DEVICE}: </span>
                             ${L.isVersionNewer(this.state.mainVersion, this.state.newMainVersion) ? L.translate('Update firmware // Firmware aktualisieren') : L.translate('Overwrite firmware // Firmware überschreiben')}
                         </span>

@@ -1,6 +1,7 @@
 import { L } from "../lquery.js";
 import { ATDevice } from "../communication/ATDevice.js";
 
+
 let firmwareUtil = {};
 
 // Intel HEX parser by https://github.com/bminer/intel-hex.js
@@ -186,8 +187,9 @@ firmwareUtil.updateDeviceFirmware = function (progressHandler) {
             message = 'Fabi V3: Do you want to update the firmware to version {?}? After confirming this message you have to add the .UF2 file in the ("{?}") device and save it. // Möchten Sie die Firmware auf Version {?} aktualisieren? Nach Bestätigung dieser Meldung müssen Sie die .UF2 Datei im ("{?}") Gerät hinzufügen und speichern.';
             deviceName = C.DEVICE_IS_FM_OR_PAD ? L.translate('Unknown device // Unbekanntes Gerät') : 'RPi PicoW'; // ASK: Whether the device is correct. 
 
-        } else if (C.DEVICE_IS_FM_OR_PAD) { 
-            message = 'FM.';
+        } else if (C.DEVICE_IS_FM_OR_PAD) {
+            message = 'Reset Firmware on FM.';
+
         }
 
         if (!confirm(L.translate(message, result.version, deviceName))) {
